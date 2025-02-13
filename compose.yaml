@@ -8,7 +8,7 @@ services:
     ports:
       - '80:3000'
     environment:
-      - API_URL=${API_URL}
+      - API_URL={{API_URL}}
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://localhost:3000/ping || exit 1"]
       interval: 30s
@@ -23,14 +23,14 @@ services:
       - '8080:5005'
     environment:
       # Configurable with .env file
-      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET}
-      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}
-      - EMAIL=${EMAIL}
-      - PASSWORD=${PASSWORD}
-      - API_KEY=${API_KEY}
-      - IP_GEOLOCATION_DB_PATH=${IP_GEOLOCATION_DB_PATH}
-      - DEBUG_MODE=${DEBUG_MODE}
-      - CLOUDFLARE_PROXY_ENABLED=${CLOUDFLARE_PROXY_ENABLED}
+      - JWT_ACCESS_TOKEN_SECRET={{JWT_ACCESS_TOKEN_SECRET}}
+      - JWT_REFRESH_TOKEN_SECRET={{JWT_REFRESH_TOKEN_SECRET}}
+      - EMAIL={{EMAIL}}
+      - PASSWORD={{PASSWORD}}
+      - API_KEY={{API_KEY}}
+      - IP_GEOLOCATION_DB_PATH={{IP_GEOLOCATION_DB_PATH}}
+      - DEBUG_MODE={{DEBUG_MODE}}
+      - CLOUDFLARE_PROXY_ENABLED={{CLOUDFLARE_PROXY_ENABLED}}
 
       # Redis and Clickhouse are required for the API to work
       - REDIS_HOST=redis
@@ -54,7 +54,7 @@ services:
     environment:
       - REDIS_PORT=6379
       - REDIS_USER=default
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_PASSWORD={{REDIS_PASSWORD}}
     healthcheck:
       test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
       interval: 30s
@@ -67,7 +67,7 @@ services:
       - CLICKHOUSE_DATABASE=analytics
       - CLICKHOUSE_USER=default
       - CLICKHOUSE_PORT=8123
-      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD}
+      - CLICKHOUSE_PASSWORD={{CLICKHOUSE_PASSWORD}}
     healthcheck:
       test: ["CMD-SHELL", "wget --no-verbose --tries=1 -O - http://127.0.0.1:8123/ping || exit 1"]
       interval: 30s
